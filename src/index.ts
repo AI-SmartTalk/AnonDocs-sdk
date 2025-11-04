@@ -8,6 +8,7 @@ export { AnonDocsClient } from './client';
 export {
   LLMProvider,
   PIIDetected,
+  PIIReplacement,
   AnonymizationResult,
   SuccessResponse,
   ErrorResponse,

@@ -17,14 +17,27 @@ export interface PIIDetected {
 }
 
 /**
+ * PII replacement mapping
+ */
+export interface PIIReplacement {
+  original: string;      // Exact original PII text
+  anonymized: string;    // What it was replaced with (e.g., "[NAME]")
+}
+
+/**
  * Anonymization result from the API
  */
 export interface AnonymizationResult {
   anonymizedText: string;
   piiDetected: PIIDetected;
+  replacements: PIIReplacement[];
   chunksProcessed: number;
   wordsPerMinute: number;
   processingTimeMs: number;
+  // DOCX only: present when document is DOCX
+  downloadUrl?: string;
+  filename?: string;
+  originalFilename?: string;
 }
 
 /**

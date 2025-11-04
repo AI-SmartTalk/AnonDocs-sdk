@@ -26,16 +26,25 @@ console.log(result.anonymizedText);
 
 console.log(result.piiDetected);
 // Output: { names: ['John Smith'], emails: ['john@example.com'], ... }
+
+console.log(result.replacements);
+// Output: [
+//   { original: 'John Smith', anonymized: '[NAME]' },
+//   { original: 'john@example.com', anonymized: '[EMAIL]' }
+// ]
 ```
 
 ## Features
 
 - 🔒 **Privacy-first** anonymization using local or cloud LLMs
 - 📄 **Document support** (PDF, DOCX, TXT)
+- ✨ **DOCX formatting preserved** - Bold, italic, colors, and more!
+- 🎯 **Precision mapping** - Track every replacement with `replacements` array
 - 🌊 **Streaming** with real-time progress updates
-- 🎯 **Full TypeScript** support with strict types
+- 💾 **Full TypeScript** support with strict types
 - 🚀 **Works in Node.js and Browser**
 - ⚡ **Multiple LLM providers** (OpenAI, Anthropic, Ollama)
+- 🆓 **Zero runtime dependencies**
 
 ## API Reference
 
@@ -82,6 +91,17 @@ const fileBuffer = readFileSync('./document.pdf');
 const result = await client.anonymizeDocument(fileBuffer, {
   provider: 'ollama'
 });
+
+// For DOCX files: formatting is preserved!
+if (result.downloadUrl) {
+  console.log('Download anonymized DOCX:', result.downloadUrl);
+  console.log('Original filename:', result.originalFilename);
+}
+
+// Access replacement mappings
+result.replacements.forEach(r => {
+  console.log(`"${r.original}" → "${r.anonymized}"`);
+});
 ```
 
 **Browser:**
@@ -93,6 +113,11 @@ const file = fileInput.files[0];
 const result = await client.anonymizeDocument(file, {
   provider: 'openai'
 });
+
+// Download DOCX with preserved formatting
+if (result.downloadUrl) {
+  window.open(result.downloadUrl, '_blank');
+}
 ```
 
 ### Streaming Anonymization
@@ -149,11 +174,25 @@ interface AnonymizationResult {
     organizations: string[];
     other: string[];
   };
+  replacements: Array<{
+    original: string;      // Exact original PII text
+    anonymized: string;    // What it was replaced with (e.g., "[NAME]")
+  }>;
   chunksProcessed: number;
   wordsPerMinute: number;
   processingTimeMs: number;
+  // DOCX only: present when document is DOCX with preserved formatting
+  downloadUrl?: string;
+  filename?: string;
+  originalFilename?: string;
 }
 ```
+
+**What's New:**
+- ✨ **`replacements`** - Precision mapping of original → anonymized text
+- ✨ **`downloadUrl`** - Download link for DOCX files with preserved formatting
+- ✨ **`filename`** - Generated filename for the anonymized document
+- ✨ **`originalFilename`** - Original document filename
 
 ### ProgressEvent
 
@@ -196,9 +235,16 @@ try {
 
 ## Supported File Types
 
-- **PDF**: `application/pdf`
 - **DOCX**: `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
+  - ✅ **Formatting preserved** (bold, italic, colors, alignment, etc.)
+  - ✅ **Download link provided** via `downloadUrl`
+  - ✅ **Best anonymization experience**
+- **PDF**: `application/pdf`
+  - ⚠️ Text extraction only (no formatting preserved)
+  - Returns anonymized text in response
 - **TXT**: `text/plain`
+  - Plain text anonymization
+  - Returns anonymized text in response
 
 Max file size: **10MB**
 
@@ -224,6 +270,7 @@ The SDK is written in TypeScript and includes full type definitions. All types a
 import type {
   LLMProvider,
   PIIDetected,
+  PIIReplacement,
   AnonymizationResult,
   ProgressEvent,
   ClientConfig
