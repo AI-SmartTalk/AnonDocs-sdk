@@ -76,7 +76,7 @@ export class AnonDocsClient {
    * @param options - Anonymization options
    */
   async anonymizeDocument(
-    file: File | Buffer,
+    file: File | Blob | Buffer,
     options?: AnonymizeDocumentOptions
   ): Promise<AnonymizationResult> {
     const formData = this.createFormData(file, options?.provider);
@@ -112,7 +112,7 @@ export class AnonDocsClient {
    * @param options - Streaming options with callbacks
    */
   async streamAnonymizeDocument(
-    file: File | Buffer,
+    file: File | Blob | Buffer,
     options?: StreamAnonymizeDocumentOptions
   ): Promise<void> {
     const formData = this.createFormData(file, options?.provider);
@@ -294,25 +294,25 @@ export class AnonDocsClient {
   }
 
   /**
-   * Create FormData for file upload
+   * Create FormData for file upload (works in both browser and Node.js)
    */
   private createFormData(
-    file: File | Buffer,
+    file: File | Blob | Buffer,
     provider?: LLMProvider
   ): FormData {
-    // Check if we're in Node.js or browser environment
-    const FormDataImpl = typeof FormData !== 'undefined' 
-      ? FormData 
-      : require('form-data');
+    const formData = new FormData();
 
-    const formData = new FormDataImpl();
-
-    if (file instanceof Buffer) {
-      // Node.js Buffer
-      formData.append('file', file, 'document');
-    } else {
+    // Handle different file types
+    if (typeof File !== 'undefined' && file instanceof File) {
       // Browser File
       formData.append('file', file);
+    } else if (typeof Blob !== 'undefined' && file instanceof Blob) {
+      // Browser Blob
+      formData.append('file', file, 'document');
+    } else {
+      // Node.js Buffer - convert to Blob
+      const blob = new Blob([file as Buffer]);
+      formData.append('file', blob, 'document');
     }
 
     if (provider || this.defaultProvider) {

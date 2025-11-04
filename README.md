@@ -234,8 +234,9 @@ import type {
 
 ## Requirements
 
-- **Node.js**: >= 16.0.0
+- **Node.js**: >= 18.0.0 (uses native `fetch`, `FormData`, `Blob`)
 - **Browser**: Modern browsers with `fetch` and `ReadableStream` support
+- **Zero runtime dependencies** - works everywhere!
 
 ## License
 
