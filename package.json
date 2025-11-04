@@ -1,6 +1,6 @@
 {
   "name": "anondocs-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript SDK for AnonDocs API - Privacy-first text and document anonymization",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,4 +34,3 @@
     "url": "https://github.com/yourusername/anondocs-sdk.git"
   }
 }
-
