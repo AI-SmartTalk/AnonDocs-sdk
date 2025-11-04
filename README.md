@@ -1,19 +1,17 @@
 # AnonDocs SDK
 
-TypeScript/JavaScript SDK for [AnonDocs API](https://anondocs.aismarttalk.tech) - Privacy-first text and document anonymization powered by LLMs.
-
-Made with ❤️ by [AI Smarttalk](https://aismarttalk.tech)
+TypeScript/JavaScript SDK for [AnonDocs](https://anondocs.aismarttalk.tech) - Privacy-first text and document anonymization powered by LLMs.
 
 ## Installation
 
 ```bash
-npm install anondocs-sdk
+npm install @aismarttalk/anondocs-sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { AnonDocsClient } from 'anondocs-sdk';
+import { AnonDocsClient } from '@aismarttalk/anondocs-sdk';
 
 const client = new AnonDocsClient({
   baseUrl: 'http://localhost:3000',
@@ -181,7 +179,7 @@ import {
   AnonDocsNetworkError,
   AnonDocsValidationError,
   AnonDocsStreamError
-} from 'anondocs-sdk';
+} from '@aismarttalk/anondocs-sdk';
 
 try {
   await client.anonymizeText('');
@@ -229,7 +227,7 @@ import type {
   AnonymizationResult,
   ProgressEvent,
   ClientConfig
-} from 'anondocs-sdk';
+} from '@aismarttalk/anondocs-sdk';
 ```
 
 ## Requirements
@@ -241,6 +239,13 @@ import type {
 ## License
 
 MIT
+
+## Links
+
+- 🌐 **Website**: [anondocs.aismarttalk.tech](https://anondocs.aismarttalk.tech)
+- 📦 **NPM**: [@aismarttalk/anondocs-sdk](https://www.npmjs.com/package/@aismarttalk/anondocs-sdk)
+- 💻 **GitHub**: [AI-Smarttalk/anondocs-sdk](https://github.com/AI-Smarttalk/anondocs-sdk)
+- 📚 **Documentation**: [anondocs.aismarttalk.tech/documentation](https://anondocs.aismarttalk.tech/docs/intro)
 
 ## Made with ❤️ by [AI SmartTalk](https://aismarttalk.tech)
 
