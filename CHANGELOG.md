@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2025-11-04
+
+### Fixed
+- **Trailing slash handling**: Automatically remove trailing slashes from `baseUrl` to prevent double-slash errors
+- Improves compatibility when users provide URLs like `https://api.example.com/` instead of `https://api.example.com`
+
+---
+
 ## [1.2.0] - 2025-11-04
 
 ### Added

@@ -2,6 +2,8 @@
 
 TypeScript/JavaScript SDK for [AnonDocs](https://anondocs.aismarttalk.tech) - Privacy-first text and document anonymization powered by LLMs.
 
+Made with ❤️ by [AI SmartTalk](https://aismarttalk.tech)
+
 ## Installation
 
 ```bash

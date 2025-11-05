@@ -31,7 +31,9 @@ export class AnonDocsClient {
    * @param config - Client configuration options
    */
   constructor(config?: ClientConfig) {
-    this.baseUrl = config?.baseUrl || 'http://localhost:3000';
+    // Remove trailing slash from baseUrl to avoid double slashes
+    const baseUrl = config?.baseUrl || 'http://localhost:3000';
+    this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
     this.defaultProvider = config?.defaultProvider;
     this.timeout = config?.timeout || 30000;
   }
